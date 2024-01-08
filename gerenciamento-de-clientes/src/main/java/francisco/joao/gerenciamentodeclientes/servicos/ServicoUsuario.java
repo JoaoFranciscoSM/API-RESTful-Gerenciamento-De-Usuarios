@@ -23,7 +23,7 @@ public class ServicoUsuario {
         if(validarEmail(usuarioRecord.email()) && validarSenha(usuarioRecord.senha()) && validarTipo(usuarioRecord.tipoUsuario())) {
             return this.repositorioUsuario.save(novoUsuario);
         } else {
-            throw new RuntimeException("Os dados não foram preenchidos corretamente!");
+            throw new RuntimeException("");
         }
     }
 
@@ -73,7 +73,7 @@ public class ServicoUsuario {
             this.repositorioUsuario.deleteById(id);
             return listarUsuarios();
         } else {
-            throw new RuntimeException("Usuário não encontrado para o ID: " + id);
+            throw new RuntimeException("");
         }
     }
 
@@ -84,10 +84,15 @@ public class ServicoUsuario {
             Usuario usuarioExistente = usuarioOptional.get();
             usuarioExistente.setEmail(usuarioRecord.email());
             usuarioExistente.setSenha(usuarioRecord.senha());
-            this.repositorioUsuario.save(usuarioExistente);
-            return pesquisarUsuario(id);
+            usuarioExistente.setTipoUsuario(usuarioRecord.tipoUsuario());
+            if(validarEmail(usuarioRecord.email()) && validarSenha(usuarioRecord.senha()) && validarTipo(usuarioRecord.tipoUsuario())) {
+                this.repositorioUsuario.save(usuarioExistente);
+                return pesquisarUsuario(id);
+            } else {
+                throw new RuntimeException("");
+            }
         } else {
-            throw new RuntimeException("Usuário não encontrado para o ID: " + id);
+            throw new RuntimeException("");
         }
     }
 
@@ -99,7 +104,7 @@ public class ServicoUsuario {
             UsuarioRecord usuarioRecord = new UsuarioRecord(id, usuarioEncontrado.getEmail(),usuarioEncontrado.getSenha(), usuarioEncontrado.getTipoUsuario());
             return usuarioRecord;
         } else {
-            throw new RuntimeException("Usuário não encontrado para o ID: " + id);
+            throw new RuntimeException("");
         }
     }
 
