@@ -2,7 +2,7 @@ package francisco.joao.gerenciamentodeclientes.servicos;
 
 import francisco.joao.gerenciamentodeclientes.dominio.usuarios.TipoUsuario;
 import francisco.joao.gerenciamentodeclientes.dominio.usuarios.Usuario;
-import francisco.joao.gerenciamentodeclientes.dominio.usuarios.UsuarioDTO;
+import francisco.joao.gerenciamentodeclientes.dominio.usuarios.UsuarioRecord;
 import francisco.joao.gerenciamentodeclientes.repositorios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +18,9 @@ public class ServicoUsuario {
     private RepositorioUsuario repositorioUsuario;
 
     // Cria um novo usuário no banco com base nos parâmetros fornecidos e retorna o usuário recém-criado.
-    public Usuario criarUsuario(UsuarioDTO usuarioDTO) {
-        Usuario novoUsuario = new Usuario(usuarioDTO);
-        if(validarEmail(usuarioDTO.email()) && validarSenha(usuarioDTO.senha()) && validarTipo(usuarioDTO.tipoUsuario())) {
+    public Usuario criarUsuario(UsuarioRecord usuarioRecord) {
+        Usuario novoUsuario = new Usuario(usuarioRecord);
+        if(validarEmail(usuarioRecord.email()) && validarSenha(usuarioRecord.senha()) && validarTipo(usuarioRecord.tipoUsuario())) {
             return this.repositorioUsuario.save(novoUsuario);
         } else {
             throw new RuntimeException("Os dados não foram preenchidos corretamente!");
@@ -78,12 +78,12 @@ public class ServicoUsuario {
     }
 
     // Edita os atributos do usuário com o ID fornecido e retorna o usuário atualizado.
-    public UsuarioDTO editarUsuario(Long id, UsuarioDTO usuarioDTO) {
+    public UsuarioDTO editarUsuario(Long id, UsuarioRecord usuarioRecord) {
         Optional<Usuario> usuarioOptional = this.repositorioUsuario.findById(id);
         if (usuarioOptional.isPresent()) {
             Usuario usuarioExistente = usuarioOptional.get();
-            usuarioExistente.setEmail(usuarioDTO.email());
-            usuarioExistente.setSenha(usuarioDTO.senha());
+            usuarioExistente.setEmail(usuarioRecord.email());
+            usuarioExistente.setSenha(usuarioRecord.senha());
             this.repositorioUsuario.save(usuarioExistente);
             return pesquisarUsuario(id);
         } else {
@@ -92,12 +92,12 @@ public class ServicoUsuario {
     }
 
     // Retorna os atributos do usuário com o ID fornecido.
-    public UsuarioDTO pesquisarUsuario(Long id) {
+    public UsuarioRecord pesquisarUsuario(Long id) {
         Optional<Usuario> usuarioOptional = this.repositorioUsuario.findById(id);
         if (usuarioOptional.isPresent()) {
             Usuario usuarioEncontrado = usuarioOptional.get();
-            UsuarioDTO usuarioDTO = new UsuarioDTO(id, usuarioEncontrado.getEmail(),usuarioEncontrado.getSenha(), usuarioEncontrado.getTipoUsuario());
-            return usuarioDTO;
+            UsuarioRecord usuarioRecord = new UsuarioRecord(id, usuarioEncontrado.getEmail(),usuarioEncontrado.getSenha(), usuarioEncontrado.getTipoUsuario());
+            return usuarioRecord;
         } else {
             throw new RuntimeException("Usuário não encontrado para o ID: " + id);
         }
