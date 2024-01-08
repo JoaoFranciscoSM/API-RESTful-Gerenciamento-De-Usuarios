@@ -21,11 +21,11 @@ public class Usuario {
     private String senha;
     private TipoUsuario tipoUsuario;
 
-    public Usuario(UsuarioDTO usuarioDTO) {
-        this.id = usuarioDTO.id();
-        this.email = usuarioDTO.email();
-        this.senha = usuarioDTO.senha();
-        this.tipoUsuario = usuarioDTO.tipoUsuario();
+    public Usuario(UsuarioRecord usuarioRecord) {
+        this.id = usuarioRecord.id();
+        this.email = usuarioRecord.email();
+        this.senha = usuarioRecord.senha();
+        this.tipoUsuario = usuarioRecord.tipoUsuario();
     }
 
 }
