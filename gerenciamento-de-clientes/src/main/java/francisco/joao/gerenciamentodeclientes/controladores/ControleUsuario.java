@@ -2,7 +2,7 @@ package francisco.joao.gerenciamentodeclientes.controladores;
 
 
 import francisco.joao.gerenciamentodeclientes.dominio.usuarios.Usuario;
-import francisco.joao.gerenciamentodeclientes.dominio.usuarios.UsuarioDTO;
+import francisco.joao.gerenciamentodeclientes.dominio.usuarios.UsuarioRecord;
 import francisco.joao.gerenciamentodeclientes.servicos.ServicoUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,8 +21,8 @@ public class ControleUsuario {
 
     // EndPoint para o sistema web realizar um CREATED, retorna o usuário criado e um HttpStatus (CREATED).
     @PostMapping
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-        Usuario novoUsuario = servicoUsuario.criarUsuario(usuarioDTO);
+    public ResponseEntity<Usuario> criarUsuario(@RequestBody UsuarioRecord usuarioRecord) {
+        Usuario novoUsuario = servicoUsuario.criarUsuario(usuarioRecord);
         return  new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
     }
 
@@ -42,9 +42,9 @@ public class ControleUsuario {
 
     // EndPoint para o sistema web realizar um UPDATE, retorna o usuário editado e um HttpStatus (OK).
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> editarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
-        servicoUsuario.editarUsuario(id, usuarioDTO);
-        Usuario usuario = new Usuario(usuarioDTO);
+    public ResponseEntity<Usuario> editarUsuario(@PathVariable Long id, @RequestBody UsuarioRecord usuarioRecord) {
+        servicoUsuario.editarUsuario(id, usuarioRecord);
+        Usuario usuario = new Usuario(usuarioRecord);
         usuario.setId(id);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
