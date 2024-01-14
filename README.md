@@ -27,8 +27,5 @@ As classes de serviço são responsáveis pela lógica de negócios da aplicaç�
 #### Repository
 Os repositórios, utilizados em conjunto com o Spring Data JPA, fornecem métodos para acessar e manipular os dados no banco em memória. Eles mapeiam objetos Java para entidades do banco de dados temporário.
 
-#### Lombok
-O projeto utiliza a biblioteca Lombok para reduzir a verbosidade do código Java, evitando a necessidade de escrever getters, setters, construtores e outros métodos boilerplate.
-
 ## Arquitetura e Padrões
 Este projeto segue os princípios de uma API RESTful, utilizando os métodos HTTP adequados para cada operação e retornando códigos de status apropriados. Os dados são enviados e recebidos em formato JSON, seguindo as melhores práticas de design de APIs.
